@@ -1,86 +1,154 @@
 package Histogram;
 
 import java.io.BufferedInputStream;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Histogram {
 
+    static Queue<String> Platinum = new Queue<>();
+    static Queue<String> Gold = new Queue<>();
+    static Queue<String> Silver = new Queue<>();
+    static Queue<String> Bronze = new Queue<>();
+    static ArrayList<Character> check = new ArrayList<>();
+
     public static void main(String[] args) {
-        
-        Scanner sc=new Scanner(new BufferedInputStream(System.in));
-        
-        System.out.println("Enter firstline");
-        String firstLine=sc.nextLine();
-        String[] info=firstLine.split(" ");
-        int number_bins=Integer.parseInt(info[1]);
-        int dataPoints =Integer.parseInt(info[0]);
-        
-         System.out.println("Second Secondline");
-        String secondLine=sc.nextLine();
-        String[] dataPoints_String=secondLine.split(" ");
-        int[] dataPoints_Number=new int[dataPoints_String.length];
-        
-        for(int i=0;i<dataPoints_String.length;i++){
-        
-        dataPoints_Number[i]=Integer.parseInt(dataPoints_String[i]);
-        
-        }
-        
-        int max=dataPoints_Number[0];
-        int min=dataPoints_Number[0];
-        
-        for(int j=0;j<dataPoints_Number.length;j++){
-            
-            if(max<dataPoints_Number[j]){
-                max=dataPoints_Number[j];
-            }
-            if(min>dataPoints_Number[j]){
-                min=dataPoints_Number[j];
-            }
-        }
-        
-        int cutoffs_value =(max-min)/number_bins;
-        int[] interval = new int[number_bins+1];
-        int[] count = new int[number_bins];
-        int count_track=0;
-        int start=min;
-          
-        for(int k=0;k<interval.length;k++){      
-            
-            if(k==0){
-                System.out.println(min);
-            }
-            
-            else{
-            interval[k]=min+cutoffs_value;
-            System.out.print(interval[k] +" "); //print the interval value
-            }
-        }
-        
-        for(int l=0;l<dataPoints;l++){
-            
-            for(int m=0;m<interval.length;m++){
-                
-                if(m==0){             
-                    if(  dataPoints_Number[l]>=min && dataPoints_Number[l]<=interval[m+1]){
-                        count[count_track]++;
-                        count_track++;
-                      }
+
+        Scanner sc = new Scanner(new BufferedInputStream(System.in));
+        int i = 0;
+
+        while (true) {
+            System.out.print("INPUT :");
+            String input = sc.nextLine();
+
+            if (input.equals("END")) {
+
+                System.out.println("REBOOT");
+                break;
+            } else if (input.equals("CLEAR")) {
+                print(i);
+            } else {
+                String[] words = input.split(" ");
+                check.add(words[0].charAt(9));
+                if (i == 0) {
+
+                    if (words[2].equals("PLATINUM")) {
+                        Platinum.enqueue(words[1]);
+                    } else if (words[2].equals("GOLD")) {
+                        Gold.enqueue(words[1]);
+                    } else if (words[2].equals("SILVER")) {
+                        Silver.enqueue(words[1]);
+                    } else if (words[2].equals("BRONZE")) {
+                        Bronze.enqueue(words[1]);
+                    }
+
+                } else {
+                    if (check.get(i - 1).equals(check.get(i))) {
+
+                        if (words[2].equals("PLATINUM")) {
+                            Platinum.enqueue(words[1]);
+                        } else if (words[2].equals("GOLD")) {
+                            Gold.enqueue(words[1]);
+                        } else if (words[2].equals("SILVER")) {
+                            Silver.enqueue(words[1]);
+                        } else if (words[2].equals("BRONZE")) {
+                            Bronze.enqueue(words[1]);
+                        }
+                    } else {
+
+                        if (words[2].equals("PLATINUM")) {
+                            Platinum.enqueue(words[1]);
+                        } else if (words[2].equals("GOLD")) {
+                            Gold.enqueue(words[1]);
+                        } else if (words[2].equals("SILVER")) {
+                            Silver.enqueue(words[1]);
+                        } else if (words[2].equals("BRONZE")) {
+                            Bronze.enqueue(words[1]);
+                        }
+                        i++;
+                        print(i);
+
+                        System.exit(0);
+                    }
+
                 }
-                else{           
-                    if(  dataPoints_Number[l]>=interval[m] &&   dataPoints_Number[l]<=interval[m+1]){
-                        count[count_track]++;
-                        count_track++;
-                      }
-                 
-                }
-                    
+                i++;
             }
         }
-        
-        for(int n=0;n<count.length;n++){
-            System.out.print(count[n] +" "); //print the result
-        }
-        
+
     }
+
+    public static void print(int i) {
+
+        System.out.print("Output :");
+        for (int count = 0; count < i; count++) {
+
+            if (!Platinum.isEmpty()) {
+                System.out.print(Platinum.dequeue() + " ");
+            }
+            if (!Gold.isEmpty()) {
+
+                System.out.print(Gold.dequeue() + " ");
+            }
+            if (!Silver.isEmpty()) {
+
+                System.out.print(Silver.dequeue() + " ");
+            }
+            if (!Bronze.isEmpty()) {
+
+                System.out.print(Bronze.dequeue() + " ");
+            }
+        }
+    }
+
+    public static class Queue<E> {
+
+        private java.util.LinkedList<E> list = new java.util.LinkedList<>();
+
+        public Queue() {
+        }
+
+        public void enqueue(E e) {
+
+            list.addLast(e);
+
+        }
+
+        public E dequeue() {
+
+            return list.removeFirst();
+
+        }
+
+        public E first() {
+
+            return list.peek();
+
+        }
+
+        public boolean isEmpty() {
+
+            return list.isEmpty();
+
+        }
+
+        public int getSize() {
+
+            return list.size();
+
+        }
+
+        @Override
+
+        public String toString() {
+
+            return "Queue: " + list.toString();
+
+        }
+
+    }
+
 }
