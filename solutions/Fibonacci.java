@@ -9,7 +9,6 @@ class Fibonacci{
         }
         return fibs;
     }
-
     public static void main(String[] args){
         Scanner in = new Scanner(System.in);
         int[] memo = fibs(100000000);
@@ -22,6 +21,5 @@ class Fibonacci{
                 return;
             }
         }
-
     }
 }
