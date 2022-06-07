@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.BufferedInputStream;
 
 class Fibonacci{
     public static int[] fibs(int n){
@@ -10,7 +11,7 @@ class Fibonacci{
         return fibs;
     }
     public static void main(String[] args){
-        Scanner in = new Scanner(System.in);
+        Scanner in = new Scanner(new BufferedInputStream(System.in));
         int[] memo = fibs(100000000);
 
         while(in.hasNextLine()){
