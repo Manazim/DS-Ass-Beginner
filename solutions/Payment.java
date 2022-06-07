@@ -122,33 +122,11 @@ public class Payment {
             return list.removeFirst();
 
         }
-
-        public E first() {
-
-            return list.peek();
-
-        }
-
         public boolean isEmpty() {
 
             return list.isEmpty();
 
         }
-
-        public int getSize() {
-
-            return list.size();
-
-        }
-
-        @Override
-
-        public String toString() {
-
-            return "Queue: " + list.toString();
-
-        }
-
     }
 
 }
