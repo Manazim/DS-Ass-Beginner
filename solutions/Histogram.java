@@ -1,82 +1,82 @@
-package Histogram;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 
+/**
+ *
+ * @author user
+ */
 import java.util.Scanner;
+class Histogram{
 
-public class Histogram {
+    public static void main(String[] args){
 
-    public static void main(String[] args) {
-
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("Enter Firstline");
-        String firstLine = sc.nextLine();
-        String[] info = firstLine.split(" ");
-        int number_bins = Integer.parseInt(info[1]);
-        int dataPoints = Integer.parseInt(info[0]);
-
-        System.out.println("Enter Secondline");
-        String secondLine = sc.nextLine();
-        String[] dataPoints_String = secondLine.split(" ");
-        int[] dataPoints_Number = new int[dataPoints_String.length];
-
-        for (int i = 0; i < dataPoints_String.length; i++) {
-
-            dataPoints_Number[i] = Integer.parseInt(dataPoints_String[i]);
-
-        }
-
-        int max = dataPoints_Number[0];
-        int min = dataPoints_Number[0];
-
-        for (int j = 0; j < dataPoints_Number.length; j++) {
-
-            if (max < dataPoints_Number[j]) {
-                max = dataPoints_Number[j];
-            }
-            if (min > dataPoints_Number[j]) {
-                min = dataPoints_Number[j];
-            }
-        }
-
-        int cutoffs_value = (max - min) / number_bins;
-        int[] interval = new int[number_bins + 1];
-        int[] count = new int[number_bins];
-        int count_track = 0;
-        int start = min;
-
-        for (int k = 0; k < interval.length; k++) {
-
-            if (k == 0) {
-                System.out.println(min);
-            } else {
-                interval[k] = min + cutoffs_value;
-                System.out.print(interval[k] + " "); //print the interval value
-            }
-        }
-
-        for (int l = 0; l < dataPoints; l++) {
-
-            for (int m = 0; m < interval.length; m++) {
-
-                if (m == 0) {
-                    if (dataPoints_Number[l] >= min && dataPoints_Number[l] <= interval[m + 1]) {
-                        count[count_track]++;
-                        count_track++;
+        Scanner in = new Scanner(System.in);
+        
+        for(int a=0; a<1; a++){
+            try{
+                int NumOfData = in.nextInt();
+                int NumOfBins = in.nextInt();
+                
+                int[] DataPoints = new int[NumOfData];
+                
+                for(int b=0; b<NumOfData; b++){
+                    DataPoints[b] =in.nextInt();
+                }
+                
+                int max = DataPoints[0];
+                int min = DataPoints[0];
+                
+                for(int i=0;i<DataPoints.length;i++){
+                    if(DataPoints[i] > max){
+                        max = DataPoints[i];
                     }
-                } else {
-                    if (dataPoints_Number[l] >= interval[m] && dataPoints_Number[l] <= interval[m + 1]) {
-                        count[count_track]++;
-                        count_track++;
+                    if(DataPoints[i] < min){
+                        min = DataPoints[i];
                     }
-
                 }
 
-            }
-        }
+                int CutoffsValue = (max-min)/NumOfBins;
+                int sum = 0;
+                int[] interval = new int[NumOfBins+1];
+                int[] count = new int[NumOfBins];
 
-        for (int n = 0; n < count.length; n++) {
-            System.out.print(count[n] + " "); //print the result
-        }
+                for(int i=0; i<interval.length; i++){
+                    if(i==0){
+                        System.out.print(min + " ");
+                        sum += min;
+                        interval[i] = min;
+                    }
 
+                    else{
+                        System.out.print(sum + " ");
+                        interval[i] = sum;
+                    }
+                    sum += CutoffsValue;
+                }
+                System.out.println();
+
+                for(int i=0; i<DataPoints.length; i++){
+                    for(int j=0; j<interval.length-1; j++){
+                        if(DataPoints[i] >= interval[j] && DataPoints[i] < interval[j+1]){
+                            count[j]++;
+                        }
+
+
+                    }
+                    if(DataPoints[i] == interval[interval.length-1]){
+                        count[interval.length-2]++;
+                    }
+                }
+
+                for(int i=0; i<count.length; i++){
+                    System.out.print(count[i] + " ");
+                }
+                }
+            catch(java.util.InputMismatchException e){
+                return;
+            }  
+        }
     }
 }
