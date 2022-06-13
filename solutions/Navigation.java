@@ -67,7 +67,7 @@ public class Navigation {
                   }       
     }
     
-    System.out.println("Enter number of queries");
+ 
     int queries=sc.nextInt();
     sc.nextLine();
     String[] path=new String[queries]; //total path source-destination that exist
@@ -105,7 +105,7 @@ public class Navigation {
                }
     }
     
-        System.out.println("Enter source and detination");
+      
         String user_path=sc.nextLine();
         
         String[] split=user_path.split(" -> ");
