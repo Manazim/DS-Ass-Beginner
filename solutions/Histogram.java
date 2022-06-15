@@ -13,13 +13,20 @@ import java.util.Scanner;
 
 class Histogram {
 
+    static Scanner scan = new Scanner(System.in);
+    
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
+        
         int testCases = scan.nextInt();
         int bins = scan.nextInt();
         int max = 0;
         int min = Integer.MAX_VALUE;
-
+        
+        histo(testCases,bins,max,min);
+        
+    }
+    
+    public static String histo(int testCases, int bins, int max, int min){
         Stack<Integer> dataPoints = new Stack<>();
         int[] counts = new int[bins];
         int[] interval = new int[bins + 1];
@@ -62,15 +69,17 @@ class Histogram {
                 }
             }
         }
+        
+        String intervals = "";
+        
         for (int i = 0; i < interval.length; i++) {
-            System.out.print(interval[i] + " ");
+             intervals = intervals+interval[i]+" ";
         }
         System.out.println("");
+        String counts1 = "";
         for (int i = 0; i < counts.length; i++) {
-            System.out.print(counts[i] + " ");
+             counts1 = counts1+counts[i]+" ";
         }
-
-        
-        
+        return intervals+"\n"+counts1;
     }
 }
