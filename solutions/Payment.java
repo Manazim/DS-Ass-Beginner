@@ -1,6 +1,3 @@
-package Payment;
-
-import java.io.BufferedInputStream;
 import java.util.*;
 
 public class Payment implements Comparable<Payment>{
@@ -97,7 +94,7 @@ public class Payment implements Comparable<Payment>{
         boolean pass = false;
         // end of variale block
                 
-        Scanner sc = new Scanner(new BufferedInputStream(System.in));
+        Scanner sc = new Scanner(System.in);
         
         while (sc.hasNextLine()) {
             try {
