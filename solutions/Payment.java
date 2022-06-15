@@ -13,7 +13,7 @@ import java.util.*;
  *
  * @author nisyaqanita
  */
-public class Payment3 implements Comparable<Payment>{
+public class Payment implements Comparable<Payment>{
     
     // variable block
     private Long oldEpoch;
@@ -30,7 +30,7 @@ public class Payment3 implements Comparable<Payment>{
     private static Stack<Long> stack = new Stack<>();
     // end of variale block
     
-    public Payment3(Long oldEpoch, String txnId, String tier) {
+    public Payment(Long oldEpoch, String txnId, String tier) {
         if (tier.equalsIgnoreCase(PLATINUM)) {
             this.newEpoch = oldEpoch - 3000;
         }
@@ -137,7 +137,7 @@ public class Payment3 implements Comparable<Payment>{
                         lastAddedEpoch = epoch;
                     }
                     
-                    Payment3 transactionObj = new Payment(epoch, txnId, tier);
+                    Payment transactionObj = new Payment(epoch, txnId, tier);
                     meowsPQ.add(transactionObj);
                     
                     Long round = lastAddedEpoch % 1000;
