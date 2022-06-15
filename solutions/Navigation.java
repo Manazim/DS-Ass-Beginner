@@ -75,7 +75,8 @@ public class Navigation_DS {
                        
     }
     
-    System.out.println("Enter number of queries");
+   sc.nextLine();
+    
     int queries=sc.nextInt();
     sc.nextLine();
     String[] path=new String[queries]; //total path source-destination that exist
@@ -189,5 +190,3 @@ public class Navigation_DS {
 
 }  
 }
-
-
