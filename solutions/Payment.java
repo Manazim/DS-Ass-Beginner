@@ -1,5 +1,6 @@
 
 import java.util.*;
+import java.io.*;
 
 public class Payment implements Comparable<Payment> {
 
@@ -95,7 +96,7 @@ public class Payment implements Comparable<Payment> {
         Long lastAddedEpoch = 0L;
         boolean pass = false;
 
-        Scanner scan = new Scanner(System.in);
+        Scanner scan = new Scanner(new BufferedInputStream(System.in));
 
         while (scan.hasNextLine()) {
             try {
