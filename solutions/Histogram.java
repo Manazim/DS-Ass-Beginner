@@ -53,16 +53,15 @@ class Histogram {
         }
 
         interval[bins - 1]--;
-        
+
         String cutoffs = "";
         String count = "";
-        for (int i = 0; i < interval.length-1; i++) {
+
+        for (int i = 0; i < interval.length; i++) {
             cutoffs = cutoffs+interval[i]+" ";
         }
-        
 
-        System.out.println();
-        for (int i = 0; i < counts.length-1; i++) {
+        for (int i = 0; i < counts.length; i++) {
             count = count+counts[i]+" ";
         }
         return cutoffs+"\n"+count;
