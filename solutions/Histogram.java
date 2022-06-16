@@ -3,67 +3,65 @@ import java.util.*;
 
 class Histogram {
 
-    static Scanner scan = new Scanner(System.in);
     public static void main(String[] args) {
+         Scanner sc = new Scanner(System.in);
 
-        int testCases = scan.nextInt();
-        int bins = scan.nextInt();
+        int amount = sc.nextInt();
 
-        try{
-            histogram(testCases,bins);
-        }catch(Exception ignored){
-        }
-    }
+        for (int j = 0; j < amount; j++) {
 
-    public static String histogram(int testCases, int bins){
+            int testCases = sc.nextInt();
+            int bins = sc.nextInt();
 
-        int max = 0;
-        int min = Integer.MAX_VALUE;
+            int max = 0;
+            int min = Integer.MAX_VALUE;
 
-        Stack<Integer> dataPoints = new Stack<>();
-        int[] counts = new int[bins];
-        int[] interval = new int[bins + 1];
+            Stack<Integer> dataPoints = new Stack<>();
 
-        for (int i = 0; i < testCases; i++) {
-            int l = scan.nextInt();
-            max = Math.max(l, max);
-            min = Math.min(l, min);
+            int[] counts = new int[bins];
+            int[] interval = new int[bins + 1];
 
-            dataPoints.push(l);
-        }
+            for (int i = 0; i < testCases; i++) {
+                int l = sc.nextInt();
+                max = Math.max(l, max);
+                min = Math.min(l, min);
 
-        scan.close();
+                dataPoints.push(l);
+            }
 
-        int range = (max - min) / bins;
+            int range = (max - min) / bins;
 
-        for (int i = 0; i < bins + 1; i++) {
-            interval[i] = (range * i + min);
-        }
+            for (int i = 0; i < bins + 1; i++) {
+                interval[i] = (range * i + min);
+            }
 
-        interval[bins - 1]++;
+            interval[bins - 1]++;
 
-        while (!dataPoints.isEmpty()) {
-            for (int i = 0; i < bins; i++) {
-                if (dataPoints.peek() < interval[i] + range) {
-                    counts[i]++;
-                    dataPoints.pop();
-                    break;
+            while (!dataPoints.isEmpty()) {
+                for (int i = 0; i < bins; i++) {
+                    if (dataPoints.peek() < interval[i] + range) {
+                        counts[i]++;
+                        dataPoints.pop();
+                        break;
+                    }
                 }
             }
+
+            interval[bins - 1]--;
+
+            String cutoffs = "";
+            String count = "";
+
+            for (int i = 0; i < interval.length; i++) {
+                cutoffs = cutoffs + interval[i] + " ";
+            }
+
+            for (int i = 0; i < counts.length; i++) {
+                count = count + counts[i] + " ";
+            }
+
+            System.out.println(cutoffs);
+            System.out.println(count);
         }
-
-        interval[bins - 1]--;
-
-        String cutoffs = "";
-        String count = "";
-
-        for (int i = 0; i < interval.length; i++) {
-            cutoffs = cutoffs+interval[i]+" ";
-        }
-
-        for (int i = 0; i < counts.length; i++) {
-            count = count+counts[i]+" ";
-        }
-        return cutoffs+"\n"+count;
     }
 }
