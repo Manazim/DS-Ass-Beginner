@@ -1,4 +1,3 @@
-
 import java.io.BufferedInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -158,6 +157,7 @@ public class Navigation_DS {
   // Add edges to the graph
   void addEdge(int v, int w) {
     adj[v].add(w);
+    adj[w].add(v);
     
   }
 
