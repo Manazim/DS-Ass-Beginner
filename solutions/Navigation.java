@@ -119,10 +119,10 @@ public class Navigation_DS {
                }
     }
     
-        System.out.println("Enter source and detination");
+       
         String user_path=sc.nextLine();
         
-        String[] split=user_path.split(" -> ");
+        String[] split=user_path.split("->");
         
         if(!source.contains(split[0])){
         System.out.println("This path doesnt start at the starting station!");
