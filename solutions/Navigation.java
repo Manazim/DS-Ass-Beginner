@@ -17,7 +17,7 @@ import java.util.Scanner;
  *
  * @author user
  */
-public class Navigation_DS {
+public class Navigation{
   
     public static void main(String[] args) {
         
