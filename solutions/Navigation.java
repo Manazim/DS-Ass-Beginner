@@ -17,13 +17,19 @@ import java.util.Scanner;
  *
  * @author user
  */
-public class Navigation{
+public class Navigation_DS {
   
     public static void main(String[] args) {
-        
+    
+    Scanner sc=new Scanner(new BufferedInputStream(System.in));
+   
+    int test_cases=sc.nextInt();
+    
+    
+    for(int num_testCases=0;num_testCases<test_cases;num_testCases++){
     HashMap< String,Integer> place = new HashMap< String, Integer>();  
     int i=0;
-    Scanner sc=new Scanner(new BufferedInputStream(System.in));
+  
     int num_rails=sc.nextInt();
     sc.nextLine();
     
@@ -126,7 +132,7 @@ public class Navigation{
         if(!destination.contains(split[1])){
         System.out.println("This path doesnt end at the destination!");    
         }
-            
+    }         
 }
     
   public static class Graph2 {
