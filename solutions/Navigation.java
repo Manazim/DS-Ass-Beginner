@@ -7,36 +7,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
-/**
- *
- * @author user
- */
 public class Navigation {
   
     public static void main(String[] args) {
     
-    Scanner sc=new Scanner(new BufferedInputStream(System.in));
+    Scanner sc=new Scanner(System.in);
    
     int test_cases=sc.nextInt();
     
     
     for(int num_testCases=0;num_testCases<test_cases;num_testCases++){
+        
     HashMap< String,Integer> place = new HashMap< String, Integer>();  
     int i=0;
-  
     int num_rails=sc.nextInt();
-    sc.nextLine();
+   
     
     Graph2 graph2=new Graph2(num_rails);
     String[] trains =new String[num_rails];
     for(int count=0;count<num_rails;count++){
-        
-       
+     
         trains[count]=sc.nextLine();
     }
     
@@ -156,6 +147,7 @@ public class Navigation {
 
   // Add edges to the graph
   void addEdge(int v, int w) {
+      
     adj[v].add(w);
     adj[w].add(v);
     
