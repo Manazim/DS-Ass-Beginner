@@ -12,14 +12,13 @@ public class Navigation{
         // read number of locations available
         number1 = sc.nextInt();
 
-
-        GraphMeow<String> graph = new GraphMeow<>(number1*2); // to build graph with specified size of ArrayList for shortest path
+        GraphMeow<String> graph = new GraphMeow<>(number1 + number1); // to build graph with specified size of ArrayList for shortest path
 
         // Declare an ArrayList for ShortestRoute method
-        ArrayList<ArrayList<Integer>> adj = new ArrayList<>(number1*2);
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>(number1 + number1);
 
         // ready a place to store an ArrayList inside adj ArrayList
-        for (int i = 0; i < (number1*2); i++) {
+        for (int i = 0; i < (number1 + number1); i++) {
             adj.add(new ArrayList<>());
         }
 
