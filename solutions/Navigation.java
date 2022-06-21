@@ -83,11 +83,11 @@ public class Navigation {
     
     
     for(int loopQueries=0;loopQueries<queries;loopQueries++){
-        path[loopQueries]=sc.nextLine();
+        path[loopQueries]=sc.nextLine().strip();
     
     
     
-        String[] source_destination =path[loopQueries].split(" -> "); //split to source and destination
+        String[] source_destination =path[loopQueries].split("->"); //split to source and destination
         source.add(source_destination[0]);
         destination.add(source_destination[1]);
         
@@ -190,6 +190,6 @@ public class Navigation {
 
 }  
 }
- 
+
 
 
