@@ -7,7 +7,7 @@ public class Navigation{
         int number1; // store number of locations
         String test; // store line read by scanner
         StringBuilder Answer = new StringBuilder(); // string path found
-        String recent[] = new String[2]; // store splitted String test
+        String recent[] = new String[3]; // store splitted String test
 
         // read number of locations available
         number1 = sc.nextInt();
