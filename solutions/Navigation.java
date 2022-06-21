@@ -13,7 +13,7 @@ public class Navigation {
 
             //Declaration for a place to store data
             String test, Answer = "";
-            String recent[] = new String[3];
+            String recent[] = new String[2];
 
             //Call Class GraphMeow
             GraphMeow<String> graph = new GraphMeow<>(number1*2);
