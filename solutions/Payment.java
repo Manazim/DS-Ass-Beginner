@@ -1,107 +1,171 @@
 
-import java.io.IOException;
 import java.util.*;
 
 class Payment {
-
     public static void main(String[] args) {
-
-        PriorityQueue<Time> tran = new PriorityQueue<Time>();
-
-        int a = 1;
-        Long start = Long.valueOf(0);
-        Long totalelapsed = Long.valueOf(0);
-        Long timespent = Long.valueOf(0);
-        Long elapsed = Long.valueOf(0);
-        int rank = 0;
-        boolean condition = true;
-
         Scanner in = new Scanner(System.in);
-
-        while (in.hasNext()) {
-            try {
-
-                String data = in.nextLine();
-                String[] arr = data.split(" ");
-
-                if (data.equals("EXIT")) {
-                    break;
-                }
-                if (data.equals("REBOOT")) {
-                    tran.clear();
-                }
-                if (arr.length == 3) {    //for 3 element format
-
-                    //for start of each 1000 milis
-                    while (condition) {
-                        start = Long.valueOf(arr[0]);
-                        double tempstart = Math.round(start / 1000d) * 1000d;
-                        start = (long) tempstart;   //to round off the long value
-                        condition = false;
-                    }
-
-                    Long timenow = Long.parseLong(arr[0]);
-                    elapsed = timenow - start;
-
-                    //PriorityQueue according to count time
-                    Long temptime = Long.valueOf(1000) - (timenow - start);
-                    if(arr[2].equalsIgnoreCase("BRONZE")) {
-                        timespent = totalelapsed  -  temptime;
-                        rank = 0;
-                    }else if(arr[2].equalsIgnoreCase("SILVER")){
-                        timespent = totalelapsed  -  temptime - Long.valueOf(1000);
-                        rank = 1;
-                    }else if(arr[2].equalsIgnoreCase("GOLD")){
-                        timespent = totalelapsed  -  temptime - Long.valueOf(2000);
-                        rank = 2;
-                    }else if(arr[2].equalsIgnoreCase("PLATINUM")){
-                        timespent = totalelapsed  -  temptime - Long.valueOf(3000);
-                        rank = 3;
-                    }
-                    tran.add(new Time(timespent,rank,arr[1]));
-                    
-                    if (elapsed >= 1000) {
-                        condition = true;
-                        totalelapsed += Long.valueOf(1000);
-                        elapsed = Long.valueOf(0);
-                        //only 100 transaction got cleared
-                        for (int j = 0; j < 100; j++) {
-                            System.out.print( tran.poll() + " ");
+        PriorityQueue<Transactions> queue_transaction = new PriorityQueue<>();
+        long second_digit1;
+        long second_digit2 = 0;
+        boolean isClear = false;
+        while(in.hasNextLine()){
+                try{
+                    String input_transaction = in.nextLine();
+                    if(input_transaction.equals("EXIT") || input_transaction.equals("REBOOT")){
+                        if(input_transaction.equals("EXIT")){
+                            break;
                         }
-                        System.out.println("");
+                        if(input_transaction.equals("REBOOT")){
+                            queue_transaction.clear();
+                        }
+                        
+                    }else{
+                        String[] transaction_details = input_transaction.split(" ");
+                        long transaction_as_long = Long.valueOf(transaction_details[0]);
+                        second_digit1 = transaction_as_long;
+                        if(queue_transaction.isEmpty()){
+                            second_digit2 = transaction_as_long;
+                        }
+                        
+                        Transactions meowtransaction = new Transactions(transaction_as_long,transaction_details[1],transaction_details[2]);
+                        switch(transaction_details[2]){
+                            case "BRONZE":
+                                queue_transaction.offer(meowtransaction);
+                                break;
+                            case "SILVER":
+                                meowtransaction.setEpoch_time_ms(meowtransaction.getEpoch_time_ms()-1000);
+                                queue_transaction.offer(meowtransaction);
+                                break;
+                            case "GOLD":
+                                meowtransaction.setEpoch_time_ms(meowtransaction.getEpoch_time_ms()-2000);
+                                queue_transaction.offer(meowtransaction);
+                                break;
+                            case "PLATINUM":
+                                meowtransaction.setEpoch_time_ms(meowtransaction.getEpoch_time_ms()-3000);
+                                queue_transaction.offer(meowtransaction);
+                                break;
+                            default:
+                                break;
+                        }
+                        
+                        if(second_digit1/1000 != second_digit2/1000 && second_digit1 > second_digit2/1000*1000+1000){//second_digit1 > second_digit2 //second_digit1 != second_digit2
+//                            System.out.println(second_digit1);
+//                            System.out.println(second_digit2);
+//                            System.out.println((second_digit2/1000)*1000);
+                            second_digit2 = transaction_as_long;
+                            int i = 0;
+                            String[] joined_id;
+                            Long[] joined_epoch;
+                            if(!queue_transaction.isEmpty()){
+                                if(queue_transaction.size()>=100){
+                                    joined_epoch = new Long[100];
+                                    joined_id = new String[100];
+                                    while(!queue_transaction.isEmpty()){
+                                        joined_epoch[i] = queue_transaction.peek().getEpoch_time_ms( );
+                                        joined_id[i] = queue_transaction.poll().getTxn_id();
+                                        i++;
+                                        if(i==100)break;
+                                    }
+                                }else{
+                                    joined_epoch = new Long[queue_transaction.size()];
+                                    joined_id = new String[queue_transaction.size()];
+                                    while(!queue_transaction.isEmpty()){
+                                        joined_epoch[i] = queue_transaction.peek().getEpoch_time_ms( );
+                                        joined_id[i] = queue_transaction.poll().getTxn_id();
+                                        i++;
+                                        if(i==100)break;
+                                    }
+                                }
+                                String hundredths_transaction = String.join(" ", joined_id);
+                                System.out.println(hundredths_transaction);
+//                            for(int j = 0; j<joined_id.length ; j++){
+//                                System.out.println(j + " " + joined_epoch[j] + " " + joined_id[j]);
+//                            }
+                            }
+                        }  
                     }
+                    
+                }catch(Exception e){
+                    return;
                 }
-            } catch(Exception e){
-                return ;
-            }
         }
     }
 }
 
-class Time implements Comparable<Time>{
-    private Long timespent;
-    private Integer rank;
+class Transactions<E> implements Comparable<Transactions>{
+    private Long epoch_time_ms;
     private String txn_id;
+    private String tier;
+    private Integer tier_int;
 
-    public Time(Long timespent, int rank, String txn_id) {
-        this.timespent = timespent;
-        this.rank = rank;
+    public Transactions(Long epoch_time_ms, String txn_id, String tier) {
+        this.epoch_time_ms = epoch_time_ms;
+        this.txn_id = txn_id;
+        this.tier = tier;
+        
+        switch(this.tier){
+                        case "BRONZE":
+                            tier_int = 0;
+                            break;
+                        case "SILVER":
+                            tier_int = 1;
+                            break;
+                        case "GOLD":
+                            tier_int = 2;
+                            break;
+                        case "PLATINUM":
+                            tier_int = 3;
+                            break;
+                        default:
+                            break;
+                    }
+    }
+
+    public Integer getTier_int() {
+        return tier_int;
+    }
+
+    public void setTier_int(int tier_int) {
+        this.tier_int = tier_int;
+    }
+
+    public Long getEpoch_time_ms() {
+        return epoch_time_ms;
+    }
+
+    public void setEpoch_time_ms(Long epoch_time_ms) {
+        this.epoch_time_ms = epoch_time_ms;
+    }
+
+    public String getTxn_id() {
+        return txn_id;
+    }
+
+    public void setTxn_id(String txn_id) {
         this.txn_id = txn_id;
     }
 
+    public String getTier() {
+        return tier;
+    }
+
+    public void setTier(String tier) {
+        this.tier = tier;
+    }
+    
+    
+    @Override
+    public int compareTo(Transactions t) {
+        if(this.getEpoch_time_ms().compareTo(t.getEpoch_time_ms())==0){
+            return this.getTier_int().compareTo(t.getTier_int());
+        }
+        return this.getEpoch_time_ms().compareTo(t.getEpoch_time_ms());
+    }
 
     @Override
     public String toString() {
-        return (this.txn_id);
+        return "time : " + epoch_time_ms + "ID :  "+ txn_id + "\n";
     }
-
-
-    @Override
-    public int compareTo(Time o) {
-        if(this.timespent.compareTo(o.timespent)==0) {
-            return this.rank.compareTo(o.rank);
-        }
-        return this.timespent.compareTo(o.timespent);
-    }
-
+    
+    
 }
