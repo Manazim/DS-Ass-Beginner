@@ -22,8 +22,6 @@ public class Navigation{
             adj.add(new ArrayList<>());
         }
 
-        sc.nextLine();
-        sc.nextLine();
         // Read string to store locations and lines
         for (int i = 1; i <= number1; i++) {
 
