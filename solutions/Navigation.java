@@ -1,4 +1,4 @@
-import java.util.*;
+ import java.util.*;
 
 public class Navigation {
     public static void main(String[] args) {
@@ -8,35 +8,34 @@ public class Navigation {
         int num_cases = Integer.parseInt(sc.nextLine());
         // Run for the number of test cases required
         for (int caseNo = 0; caseNo < num_cases; caseNo++) {
-            
-            
-            int number_Connection = sc.nextInt(); //How many connection in the test cases
+            //Scan size of location data
+            int number1 = sc.nextInt();
 
             //Declaration for a place to store data
             String test, Answer = "";
             String recent[] = new String[3];
 
             //Call Class GraphMeow
-            Graph<String> graph = new Graph<>(number_Connection + number_Connection);
+            GraphMeow<String> graph = new GraphMeow<>(number1 + number1);
 
             //Declare an ArrayList for ShortestRoute method
-            ArrayList<ArrayList<Integer>> adj = new ArrayList<>(number_Connection + number_Connection);
+            ArrayList<ArrayList<Integer>> adj = new ArrayList<>(number1 + number1);
 
             //ready a place to store an ArrayList inside adj ArrayList
-            for (int i = 0; i < (number_Connection + number_Connection); i++) {
+            for (int i = 0; i < (number1 + number1); i++) {
                 adj.add(new ArrayList<>());
             }
 
             sc.nextLine();
             //Data for location and line
-            for (int i = 1; i <= number_Connection; i++) { //read line by line of the input
+            for (int i = 1; i <= number1; i++) {
 
-                test = sc.nextLine();  
-                recent = test.split(" => ");   //split the string to get Location name (source and destination)
+                test = sc.nextLine();
+                recent = test.split(" => ");   //split the string to get Location name
 
                 //add both location to LinkedList in GraphMeow using method
-                graph.addLocation(number_Connection, recent[0]);
-                graph.addLocation(number_Connection, recent[1]);
+                graph.addLocation(number1, recent[0]);
+                graph.addLocation(number1, recent[1]);
 
                 //add Line between d1 & d2 (for LinkedList in GraphMeow) , then add edge between them (to find Shortest Route)
                 if (graph.addLine(recent[1], recent[0]) && graph.addLine(recent[0], recent[1]) == true) {
@@ -45,13 +44,13 @@ public class Navigation {
                     addEdge(adj, s, d);
                 }
             }
-            int number_Queries = sc.nextInt(); //number of queries
+            int number2 = sc.nextInt();
 
             int s, d;
             LinkedList<Integer> jalan;
 
             sc.nextLine();
-            for (int i = 1; i <= number_Queries; i++) {
+            for (int i = 1; i <= number2; i++) {
 
                 //for user input
                 test = sc.nextLine();
@@ -80,7 +79,7 @@ public class Navigation {
                     System.out.println("This path doesnt end at the destination!");
                 }
 
-                jalan = printShortestDistance(adj, s, d, (number_Connection + number_Connection));
+                jalan = printShortestDistance(adj, s, d, (number1 + number1));
 
                 if (jalan == null) {
                     System.out.println("There is no train from " + recent[0] + " to " + recent[1]);
@@ -172,7 +171,7 @@ public class Navigation {
         queue.add(src);
  
         // bfs Algorithm
-        while (!queue.isEmpty()) { //if queue is not empty
+        while (!queue.isEmpty()) {
             int u = queue.remove();
             for (int i = 0; i < adj.get(u).size(); i++) {
                 if (visited[adj.get(u).get(i)] == false) {
@@ -264,20 +263,20 @@ class Line<T extends Comparable<T>> {
         }
     }
 
-class Graph<T extends Comparable<T>> extends ArrayList{
+class GraphMeow<T extends Comparable<T>> extends ArrayList{
     Location<T> head;
     int size;
     ArrayList<ArrayList<Integer>> adj ;
 
 
     //default constructor
-    public Graph() {
+    public GraphMeow() {
         head = null;
         size = 0;
     }
 
     //constructor to prepare ArrayList for Shortest distance
-    public Graph(int size) {
+    public GraphMeow(int size) {
         this.adj = new ArrayList<>(size);
         head = null;
         size = 0;
