@@ -16,13 +16,13 @@ public class Navigation {
             String recent[] = new String[3];
 
             //Call Class GraphMeow
-            GraphMeow<String> graph = new GraphMeow<>(number1 + number1);
+            GraphMeow<String> graph = new GraphMeow<>(number1*2);
 
             //Declare an ArrayList for ShortestRoute method
-            ArrayList<ArrayList<Integer>> adj = new ArrayList<>(number1 + number1);
+            ArrayList<ArrayList<Integer>> adj = new ArrayList<>(number1*2);
 
             //ready a place to store an ArrayList inside adj ArrayList
-            for (int i = 0; i < (number1 + number1); i++) {
+            for (int i = 0; i < (number1*2); i++) {
                 adj.add(new ArrayList<>());
             }
 
