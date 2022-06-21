@@ -31,7 +31,7 @@ for case in sorted(test_cases):
             src, dst = line.strip().split(" -> ")
 
             try:
-                user_path = list(map(str.strip, input().split("->")))
+                user_path = list(map(str.strip, input().split(" -> ")))
             except EOFError:
                 raise Exception('Program stopped without completing all the tasks!')
             if user_path[0] != src:
