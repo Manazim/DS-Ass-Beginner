@@ -335,7 +335,7 @@ class GraphMeow<T extends Comparable<T>> extends ArrayList{
 //                 previous.nextLocation = newlocation; //at the end the new element will be added
 //                 previous.nextLocation.tag = no;
                 temp.nextLocation = newlocation;
-                temp.nextlocation = no;
+                temp.nextLocation = no;
             }
             //size of list increase by 1
             size++;
