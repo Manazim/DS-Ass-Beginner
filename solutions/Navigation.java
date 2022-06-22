@@ -23,14 +23,14 @@ public class Navigation {
             ArrayList<ArrayList<Integer>> adj = new ArrayList<>(numberOfLocation*2);
 
             // ready a place to store an ArrayList inside adj ArrayList
-            for (int i = 0; i < (numberOfLcation*2); i++) {
+            for (int i = 0; i < (numberOfLocation*2); i++) {
                 adj.add(new ArrayList<>());
             }
 
             sc.nextLine();
             
             //Data for location and line
-            for (int i = 1; i <= numberOFLocation; i++) {
+            for (int i = 1; i <= numberOfLocation; i++) {
 
                 line = sc.nextLine(); // read line of input
                 location = line.split(" => ");   // split the string to get Location name
