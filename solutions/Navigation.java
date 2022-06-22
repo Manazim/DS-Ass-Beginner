@@ -8,63 +8,69 @@ public class Navigation {
         int num_cases = Integer.parseInt(sc.nextLine());
         // Run for the number of test cases required
         for (int caseNo = 0; caseNo < num_cases; caseNo++) {
-            // Scan number of location inn the current test case
-            int numberOfLocation = sc.nextInt();
+            //Scan size of location data
+            int number1 = sc.nextInt();
 
-            // Declaration for a place to store data
-            String line, path = "";
-            String location[] = new String[2];
+            //Declaration for a place to store data
+            String test, Answer = "";
+            String recent[] = new String[2];
 
-            // Call Class GraphMeow
-            // Double the number of location as to implement bidirectional graph
-            GraphMeow<String> graph = new GraphMeow<>(numberOfLocation*2);
+            //Call Class GraphMeow
+            GraphMeow<String> graph = new GraphMeow<>(number1*2);
 
-            // Declare an ArrayList for ShortestRoute method with the same size as graph
-            ArrayList<ArrayList<Integer>> adj = new ArrayList<>(numberOfLocation*2);
+            //Declare an ArrayList for ShortestRoute method
+            ArrayList<ArrayList<Integer>> adj = new ArrayList<>(number1*2);
 
-            // ready a place to store an ArrayList inside adj ArrayList
-            for (int i = 0; i < (numberOfLocation*2); i++) {
+            //ready a place to store an ArrayList inside adj ArrayList
+            for (int i = 0; i < (number1*2); i++) {
                 adj.add(new ArrayList<>());
             }
 
             sc.nextLine();
-            
             //Data for location and line
-            for (int i = 1; i <= numberOfLocation; i++) {
+            for (int i = 1; i <= number1; i++) {
 
-                line = sc.nextLine(); // read line of input
-                location = line.split(" => ");   // split the string to get Location name
+                test = sc.nextLine();
+                recent = test.split(" => ");   //split the string to get Location name
 
-                // add both location to graph 
-                // equivalent to adding vertex to the graph
-                graph.addLocation(numberOfLocation, location[0]);
-                graph.addLocation(numberOfLocation, location[1]);
+                //add both location to LinkedList in GraphMeow using method
+                graph.addLocation(number1, recent[0]);
+                graph.addLocation(number1, recent[1]);
 
-                // add Line between d1 & d2 (for LinkedList in GraphMeow)
-                // then add edge between them (to find Shortest Route)
-                if (graph.addLine(location[1], location[0]) && graph.addLine(location[0], location[1]) == true) {
-                    int s = graph.hasLocationNo(location[0]); // store the position of the location
-                    int d = graph.hasLocationNo(location[1]); // store the position of the location
-                    addEdge(adj, s, d); // static method to add edge between the locations to be used for BFS
+                //add Line between d1 & d2 (for LinkedList in GraphMeow) , then add edge between them (to find Shortest Route)
+                if (graph.addLine(recent[1], recent[0]) && graph.addLine(recent[0], recent[1]) == true) {
+                    int s = graph.hasLocationNo(recent[0]);
+                    int d = graph.hasLocationNo(recent[1]);
+                    addEdge(adj, s, d);
                 }
             }
-            int numberOfQueries = sc.nextInt();
+            int number2 = sc.nextInt();
 
             int s, d;
             LinkedList<Integer> jalan;
 
             sc.nextLine();
-            for (int i = 1; i <= numberOfQueries; i++) {
+            for (int i = 1; i <= number2; i++) {
 
-                //for input line
-                line = sc.nextLine();
-                location = line.split(" -> "); //split the string to get Location name
+                //for user input
+                test = sc.nextLine();
+                recent = test.split(" -> ");   //split the string to get Location name
 
-//                 graph.hasLocation(location[0]);
-//                 graph.hasLocation(location[1]);
-
-                s = graph.hasLocationNo(location[0]);
-                d = graph.hasLocationNo(location[1]);
+                graph.hasLocation(recent[0]);
+                graph.hasLocation(recent[1]);
+            /*
+            if(graph.hasLocation(recent[0]) == false){
+                    System.out.println("This path doesnt start at the starting station!");
+                    continue;
+                }
+            
+            if(graph.hasLocation(recent[1]) == false){
+                    System.out.println("This path doesnt end at the destination!");
+                    continue;
+                }
+            */
+                s = graph.hasLocationNo(recent[0]);
+                d = graph.hasLocationNo(recent[1]);
 
                 if (s == -1) {
                     System.out.println("This path doesnt start at the starting station!");
@@ -73,40 +79,43 @@ public class Navigation {
                     System.out.println("This path doesnt end at the destination!");
                 }
 
-                jalan = ShortestDistance(adj, s, d, (numberOfLocation*2));
+                jalan = printShortestDistance(adj, s, d, (number1 + number1));
 
                 if (jalan == null) {
-                    System.out.println("There is no train from " + location[0] + " to " + location[1]);
+                    System.out.println("There is no train from " + recent[0] + " to " + recent[1]);
                     continue;
                 } else {
                     for (int j = jalan.size() - 1; j >= 0; j--) {
                         if (j == 0) {
-                            path += graph.getAllLocationObjects().get(jalan.get(j));
+                            Answer += graph.getAllLocationObjects().get(jalan.get(j));
                             continue;
                         }
-                        path += graph.getAllLocationObjects().get(jalan.get(j)) + "->";
+                        Answer += graph.getAllLocationObjects().get(jalan.get(j)) + "->";
                     }
-                    System.out.println(path);
-                    path = "";
+                    System.out.println(Answer);
+                    Answer = "";
                 }
             }
         }
     }
     
-    // static method to add edge between two locations
+    
     private static void addEdge(ArrayList<ArrayList<Integer>> adj, int i, int j){
         adj.get(i).add(j);
         adj.get(j).add(i);
     }
     
-    // find shortest path of specified source and destination
-    private static LinkedList<Integer> ShortestDistance(ArrayList<ArrayList<Integer>> adj,int s, int dest, int v){
-        // predecessor[i] array stores predecessor of i and distance array stores distance of i from s
+    // function to print the shortest distance and path
+    // between source vertex and destination vertex
+    private static LinkedList<Integer> printShortestDistance(ArrayList<ArrayList<Integer>> adj,int s, int dest, int v){
+        // predecessor[i] array stores predecessor of
+        // i and distance array stores distance of i
+        // from s
         int pred[] = new int[v];
         int dist[] = new int[v];
  
-        // 
         if (BFS(adj, s, dest, v, pred, dist) == false) {
+            //System.out.println("This path doesnt start at the starting station!");
             return null;
         }
  
@@ -119,26 +128,44 @@ public class Navigation {
             crawl = pred[crawl];
         }
  
+        // Print distance
+        //System.out.println("Shortest Path : Next " + dist[dest] + " Location");
+        
         return path;
+        // Print path
+        /*
+        System.out.println("Path is ::");
+            for (int i = path.size() - 1; i >= 0; i--) {
+            System.out.print(path.get(i) + " ");
+        }*/
     }
  
-    // a modified version of BFS that stores predecessor of each vertex in array pred and its distance from source in array dist
+    // a modified version of BFS that stores predecessor
+    // of each vertex in array pred
+    // and its distance from source in array dist
     private static boolean BFS(ArrayList<ArrayList<Integer>> adj, int src,int dest, int v, int pred[], int dist[]){
-        
-        // a queue to maintain queue of vertices whose adjacency list is to be scanned as per normal BFS algorithm using LinkedList of Integer type
+        // a queue to maintain queue of vertices whose
+        // adjacency list is to be scanned as per normal
+        // BFS algorithm using LinkedList of Integer type
         LinkedList<Integer> queue = new LinkedList<>();
  
-        // boolean array visited[] which stores the information whether ith vertex is reached at least once in the Breadth First Search
+        // boolean array visited[] which stores the
+        // information whether ith vertex is reached
+        // at least once in the Breadth first search
         boolean visited[] = new boolean[v];
  
-        // initially all vertices are unvisited so v[i] for all i is false and as no path is yet constructed dist[i] for all i set to infinity
+        // initially all vertices are unvisited
+        // so v[i] for all i is false
+        // and as no path is yet constructed
+        // dist[i] for all i set to infinity
         for (int i = 0; i < v; i++) {
             visited[i] = false;
             dist[i] = Integer.MAX_VALUE;
             pred[i] = -1;
         }
  
-        // now source is first to be visited and distance from source to itself should be 0
+        // now source is first to be visited and
+        // distance from source to itself should be 0
         visited[src] = true;
         dist[src] = 0;
         queue.add(src);
@@ -153,7 +180,8 @@ public class Navigation {
                     pred[adj.get(u).get(i)] = u;
                     queue.add(adj.get(u).get(i));
  
-                    // stopping condition (when we find our destination)
+                    // stopping condition (when we find
+                    // our destination)
                     if (adj.get(u).get(i) == dest)
                         return true;
                 }
@@ -163,7 +191,7 @@ public class Navigation {
     }
 }
 
-// class Location (equivalent to vertex in graph representation)
+
 class Location<T extends Comparable<T>> extends ArrayList<T> {
         
         T locationInfo;
@@ -207,8 +235,7 @@ class Location<T extends Comparable<T>> extends ArrayList<T> {
             visited = false;
         }
     }
-
-// class Line (equivalent to edge in graph representation)
+    
 class Line<T extends Comparable<T>> {
         
         Location<T> toLocation;
@@ -236,11 +263,10 @@ class Line<T extends Comparable<T>> {
         }
     }
 
-// class GraphMeow to store data in graph-like representation
 class GraphMeow<T extends Comparable<T>> extends ArrayList{
     Location<T> head;
     int size;
-    ArrayList<ArrayList<Integer>> adj;
+    ArrayList<ArrayList<Integer>> adj ;
 
 
     //default constructor
@@ -303,79 +329,62 @@ class GraphMeow<T extends Comparable<T>> extends ArrayList{
     //method to add a location v into the list
     public boolean addLocation(int num,T v){
         int no = 0;
-        
-        //let the cursor start from head
-        Location<T> temp = head;
-        
-        //set location v as new location (*total number of location, *location name, *ArrayList for line)
-        Location<T> newlocation = new Location<>(num,v,null);
-        
-        //to check whether location v exist in the list
+        //to check wether location v exist in the list, if not then continue
         if(hasLocation(v) == false){
-//             Location<T> temp = head;//let the cursor start from head
-//             Location<T> newlocation = new Location<>(num,v,null);//set location v as new location (*total number of location, *location name, *ArrayList for line)
+            Location<T> temp = head;//let the cursor start from head
+            Location<T> newlocation = new Location<>(num,v,null);//set location v as new location (*total number of location, *location name, *ArrayList for line)
 
-            //if list is empty, location v will be the head of the list
+            //if there is no element in the list, location v will be the head of the list
             if(head == null){
                 head = newlocation;
                 head.tag = no;
             }
-            
-            // list already has elements
+
             else{
-                //set another variable for set the nextLocation of the last element in the list
-//                 Location<T> previous = head;
+                Location<T> previous = head;//set another variable for set the nextLocation of the last element in the list
                 //we use temp to move the list until the end of the current list
                 while(temp != null){
                     no++;
-//                     previous = temp;
+                    previous = temp;
                     temp = temp.nextLocation;
                 }
                 //cursor will be at the end of the list
-//                 previous.nextLocation = newlocation; //at the end the new element will be added
-//                 previous.nextLocation.tag = no;
-                temp.nextLocation = newlocation;
-                temp.nextLocation.tag = no;
+                previous.nextLocation = newlocation; //at the end the new element will be added
+                previous.nextLocation.tag = no;
             }
-            //size of list increase by 1
-            size++;
+            size++;//size of list increase by 1
             return true;
         }
-        //location already exist
-        else{  
+        else    //location already exist
             return false;
-        }
     }
 
     //method to return a list of vertex using ArrayList
     public ArrayList<T> getAllLocationObjects(){
         ArrayList<T> list = new ArrayList<>();
         Location<T> temp = head;//let the cursor start from head of list
-//         int i=0;
+        int i=0;
 
         //the cursor will move to the end of the list
         while (temp != null){
             //add location to ArrayList
             list.add(temp.locationInfo);
             temp = temp.nextLocation;//go to next element in the list;
-//             i++;
+            i++;
         }
         return list;
     }
 
-    // method to check the edge between locations
+    //method to check the edge of locations
     public boolean hasLine(T source, T destination){
-        // if list if empty
-        if(head == null) {
+        //check wether there are location in the list
+        if(head == null) 
             return false;
-        }
-        
-        // check whether source and destination is exist in the list
-        if(!hasLocation(source) || !hasLocation(destination)) {
+        //check wether source and destination is exist in the list
+        if(!hasLocation(source) || !hasLocation(destination)) 
             return false;
-        }
 
-        // set the cursor at the head of the list
+        //set the cursor at the head of the list
         Location<T> sourceLocation = head;
 
         //run until sourceLocation == source 
@@ -397,17 +406,16 @@ class GraphMeow<T extends Comparable<T>> extends ArrayList{
         return false;
     }
 
-    // method to add edge between existing locations
+    //method to add edge for a existing location
     public boolean addLine(T source, T destination){
-        // if list is empty
+        //check wether there are locations in the list
         if(head == null) 
             return false;
-        
-        // if source / destination is not in the list
-        if(!hasLocation(source) || !hasLocation(destination))
+        //check wether source and destination is exist in the list
+        if(!hasLocation(source) || !hasLocation(destination)) //false sebab antara source and destination tak wujud
             return false;
 
-        // to check if the is existing edge between these locations
+        //to check if the is existing edge between these locations
         if(hasLine(source,destination) == true)
             return false;
 
@@ -445,26 +453,24 @@ class GraphMeow<T extends Comparable<T>> extends ArrayList{
         return false;
     }
 
-    // method to find the locations that connected to v
+    //method to find the locations that connected to v
     public ArrayList<T> getNeighbours(T v){
-        ArrayList<T> list = new ArrayList<>();
-        
-        // check whether v exist in the list
-        if(!hasLocation(v)){
+        //check wether v exist in the list
+        if(!hasLocation(v))
             return null;
-        }
 
-        // set cursor at the head of the list
+        ArrayList<T> list = new ArrayList<>();
+        //set cursor at the head of the list
         Location<T> temp = head;
 
-        // run until the end of list to find v
+        //run until the end of list to find v
         while(temp != null){
-            // location v found
+            //location v found
             if(temp.locationInfo.compareTo(v)== 0 ){
-                // set cursor at the first edge of location v
+                //set cursor at the first edge of location v
                 Line<T> currentLine = temp.firstLine;
 
-                // run until the last edge to collect data
+                //run until the last edge to collect data
                 while(currentLine != null){
                     list.add(currentLine.toLocation.locationInfo);//add to ArrayList
                     currentLine = currentLine.nextLine;
@@ -509,7 +515,7 @@ class GraphMeow<T extends Comparable<T>> extends ArrayList{
             Line<T> currentLine = temp.firstLine;//place cursor at the first edge of the temp location
 
             //run until the last edge of the location
-            for(int i=0 ; i < temp.neighbour.size() ; i++){
+            for(int i=0 ; i<temp.neighbour.size() ; i++){
                 System.out.println("["+temp.locationInfo+" , "+temp.neighbour.get(i)+"] ");
                 currentLine = currentLine.nextLine;
             }
