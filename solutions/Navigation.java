@@ -9,7 +9,7 @@ public class Navigation {
         // Run for the number of test cases required
         for (int caseNo = 0; caseNo < num_cases; caseNo++) {
             // Scan number of location inn the current test case
-            int numberOFLocation = sc.nextInt();
+            int numberOfLocation = sc.nextInt();
 
             // Declaration for a place to store data
             String line, path = "";
