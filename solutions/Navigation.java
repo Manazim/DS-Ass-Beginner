@@ -17,7 +17,7 @@ public class Navigation {
 
             // Call Class GraphMeow
             // Double the number of location as to implement bidirectional graph
-            GraphMeow<String> graph = new GraphMeow<>(numberOFLocation*2);
+            GraphMeow<String> graph = new GraphMeow<>(numberOfLocation*2);
 
             // Declare an ArrayList for ShortestRoute method with the same size as graph
             ArrayList<ArrayList<Integer>> adj = new ArrayList<>(numberOfLocation*2);
@@ -73,7 +73,7 @@ public class Navigation {
                     System.out.println("This path doesnt end at the destination!");
                 }
 
-                jalan = printShortestDistance(adj, s, d, (numberOfLocation*2));
+                jalan = ShortestDistance(adj, s, d, (numberOfLocation*2));
 
                 if (jalan == null) {
                     System.out.println("There is no train from " + location[0] + " to " + location[1]);
@@ -335,7 +335,7 @@ class GraphMeow<T extends Comparable<T>> extends ArrayList{
 //                 previous.nextLocation = newlocation; //at the end the new element will be added
 //                 previous.nextLocation.tag = no;
                 temp.nextLocation = newlocation;
-                temp.nextLocation = no;
+                temp.nextLocation.tag = no;
             }
             //size of list increase by 1
             size++;
