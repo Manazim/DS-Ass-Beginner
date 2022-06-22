@@ -20,7 +20,7 @@ public class Navigation {
             // double the number of location as to implement bidirectional graph
             int doubleNoOfLocation = numberOfLocation * 2;
 
-            // Create GraphMeow called graph
+            // Create GraphMeow object called graph
             GraphMeow<String> graph = new GraphMeow<>(doubleNoOfLocation);
 
             // Declare an ArrayList for ShortestRoute method
