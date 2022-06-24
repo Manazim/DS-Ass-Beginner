@@ -20,7 +20,7 @@ public class Navigation {
             // double the number of location as to implement bidirectional graph
             int doubleNoOfLocation = numberOfLocation * 2;
 
-            // Create GraphMeow object called graph
+            // Create GraphMeow called graph
             GraphMeow<String> graph = new GraphMeow<>(doubleNoOfLocation);
 
             // Declare an ArrayList for ShortestRoute method
@@ -102,6 +102,8 @@ public class Navigation {
                     path = "";
                 }
             }
+
+            sc.close();
         }
     }
     
@@ -148,7 +150,16 @@ public class Navigation {
     }
  
 
-  
+    /**
+     * A modified version of BFS that stores predecessor of each location in array pred and its distance form source in array dist
+     * @param adj - adjacency list
+     * @param src - tag of source location
+     * @param dest - tag of destination location
+     * @param v - number of locations
+     * @param pred - array of predecessor of location
+     * @param dist - array of distance predecessor from location
+     * @return true when destination is found and vice versa
+     */
     private static boolean BFS(ArrayList<ArrayList<Integer>> adj, int src,int dest, int v, int pred[], int dist[]){
         // a queue to maintain queue of vertices whose adjacency list is to be scanned as per normal BFS algorithm using LinkedList of Integer type
         LinkedList<Integer> queue = new LinkedList<>();
@@ -228,7 +239,19 @@ class Location<T extends Comparable<T>> extends ArrayList<T> {
             this.visited = false;
         }
 
-      
+        // void visit() {
+        //     visited = true;
+        // }
+
+        // void unvisit() {
+        //     visited = false;
+        // }
+    }
+
+/**
+ * class Line
+ * equivalent to edge in graph representation
+ */
 class Line<T extends Comparable<T>> {
         
         Location<T> toLocation;
@@ -247,7 +270,19 @@ class Line<T extends Comparable<T>> {
             //this.neighbour.add(toLocation.locationInfo);
         }
         
-        
+        // void visit() {
+        //     visited = true;
+        // }
+
+        // void unvisit() {
+        //     visited = false;
+        // }
+    }
+
+/**
+ * class GraphMeow
+ * graph representation using linked list concept
+ */    
 class GraphMeow<T extends Comparable<T>> extends ArrayList{
     Location<T> head;
     int size;
@@ -278,7 +313,12 @@ class GraphMeow<T extends Comparable<T>> extends ArrayList{
         return this.size;
     }
 
-    
+    //method to check whether location v is exist in the list
+    /**
+     *  method to check whether location v is exist in the list
+     * @param v - location
+     * @return true if location is found, false if vice versa
+     */
     public boolean hasLocation(T v){
         //if list == null
         if(head == null)
@@ -318,7 +358,12 @@ class GraphMeow<T extends Comparable<T>> extends ArrayList{
         return -1;//return false as there are no location v
     }
 
-    
+    /**
+     * method to add a location v into the graph
+     * @param num - number of locations
+     * @param v - location
+     * @return true if location is successfully added to the graph, false if vice versa
+     */
     public boolean addLocation(int num,T v){
         int no = 0;
         //to check wether location v exist in the list, if not then continue
@@ -371,7 +416,12 @@ class GraphMeow<T extends Comparable<T>> extends ArrayList{
         return list;
     }
 
-   
+    /**
+     * method to check the line of between the two specified locations
+     * @param source - the source location
+     * @param destination - the destination location
+     * @return true if line exist between the specified locations, false if vice verse
+     */
     public boolean hasLine(T source, T destination){
         //check wether there are location in the list
         if(head == null) 
@@ -402,7 +452,12 @@ class GraphMeow<T extends Comparable<T>> extends ArrayList{
         return false;
     }
 
-  
+    /**
+     * method to add edge for existing locations
+     * @param source - first location
+     * @param destination - second location
+     * @return true if successfully add adge between the two locations, false if vice versa
+     */
     public boolean addLine(T source, T destination){
         //check wether there are locations in the list
         if(head == null) 
@@ -503,7 +558,27 @@ class GraphMeow<T extends Comparable<T>> extends ArrayList{
         }
     }
 
-    
+    //method to print edge for each location but using ArrayList<E> declared in Location
+    // public void printLines2(int num){
+    //     //set cursor at the head of the list
+    //     Location<T> temp = head;
+    //     int no = 0;
+
+    //     //run until teh end of teh list
+    //     while(temp !=null){
+    //         System.out.println("# "+no+" "+temp.locationInfo+" : ");
+    //         Line<T> currentLine = temp.firstLine;//place cursor at the first edge of the temp location
+
+    //         //run until the last edge of the location
+    //         for(int i=0 ; i<temp.neighbour.size() ; i++){
+    //             System.out.println("["+temp.locationInfo+" , "+temp.neighbour.get(i)+"] ");
+    //             currentLine = currentLine.nextLine;
+    //         }
+    //         System.out.println();
+    //         temp = temp.nextLocation;
+    //         no++;
+    //     }
+    // }
 
     public ArrayList<T> getNeighboursLocation(T v){
         if(head == null)
