@@ -49,9 +49,7 @@ class Payment {
                         }
                         
                         if(second_digit1/1000 != second_digit2/1000 && second_digit1 > second_digit2/1000*1000+1000){//second_digit1 > second_digit2 //second_digit1 != second_digit2
-//                            System.out.println(second_digit1);
-//                            System.out.println(second_digit2);
-//                            System.out.println((second_digit2/1000)*1000);
+
                             second_digit2 = transaction_as_long;
                             int i = 0;
                             String[] joined_id;
