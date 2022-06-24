@@ -102,8 +102,6 @@ public class Navigation {
                     path = "";
                 }
             }
-
-            sc.close();
         }
     }
     
